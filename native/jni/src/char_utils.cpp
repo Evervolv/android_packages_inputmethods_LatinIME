@@ -14,7 +14,9 @@
  * limitations under the License.
  */
 
-#include <stdlib.h>
+#include <cstdlib>
+
+#include "char_utils.h"
 
 namespace latinime {
 
@@ -86,6 +88,7 @@ static const struct LatinCapitalSmallPair SORTED_CHAR_MAP[] = {
     { 0x00C5, 0x00E5 },  // LATIN CAPITAL LETTER A WITH RING ABOVE
     { 0x00C6, 0x00E6 },  // LATIN CAPITAL LETTER AE
     { 0x00D0, 0x00F0 },  // LATIN CAPITAL LETTER ETH
+    { 0x00D1, 0x00F1 },  // LATIN CAPITAL LETTER N WITH TILDE
     { 0x00D5, 0x00F5 },  // LATIN CAPITAL LETTER O WITH TILDE
     { 0x00D6, 0x00F6 },  // LATIN CAPITAL LETTER O WITH DIAERESIS
     { 0x00D8, 0x00F8 },  // LATIN CAPITAL LETTER O WITH STROKE
@@ -217,6 +220,7 @@ static const struct LatinCapitalSmallPair SORTED_CHAR_MAP[] = {
     { 0x0416, 0x0436 },  // CYRILLIC CAPITAL LETTER ZHE
     { 0x0417, 0x0437 },  // CYRILLIC CAPITAL LETTER ZE
     { 0x0418, 0x0438 },  // CYRILLIC CAPITAL LETTER I
+    { 0x0419, 0x0439 },  // CYRILLIC CAPITAL LETTER SHORT I
     { 0x041A, 0x043A },  // CYRILLIC CAPITAL LETTER KA
     { 0x041B, 0x043B },  // CYRILLIC CAPITAL LETTER EL
     { 0x041C, 0x043C },  // CYRILLIC CAPITAL LETTER EM
@@ -883,17 +887,16 @@ static const struct LatinCapitalSmallPair SORTED_CHAR_MAP[] = {
 };
 
 static int compare_pair_capital(const void *a, const void *b) {
-    return (int)(*(unsigned short *)a)
-            - (int)((struct LatinCapitalSmallPair*)b)->capital;
+    return static_cast<int>(*static_cast<const unsigned short *>(a))
+            - static_cast<int>((static_cast<const struct LatinCapitalSmallPair *>(b))->capital);
 }
 
-unsigned short latin_tolower(unsigned short c) {
+unsigned short latin_tolower(const unsigned short c) {
     struct LatinCapitalSmallPair *p =
-            (struct LatinCapitalSmallPair *)bsearch(&c, SORTED_CHAR_MAP,
+            static_cast<struct LatinCapitalSmallPair *>(bsearch(&c, SORTED_CHAR_MAP,
                     sizeof(SORTED_CHAR_MAP) / sizeof(SORTED_CHAR_MAP[0]),
                     sizeof(SORTED_CHAR_MAP[0]),
-                    compare_pair_capital);
+                    compare_pair_capital));
     return p ? p->small : c;
 }
-
 } // namespace latinime

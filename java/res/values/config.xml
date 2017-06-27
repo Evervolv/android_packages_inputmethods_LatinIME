@@ -112,4 +112,7 @@
 
     <!-- Display suggested words while typing  -->
     <bool name="config_show_suggestions_default">true</bool>
+
+    <!-- Enable swipe gestures when native lib is present -->
+    <bool name="config_enable_swipe_gestures">true</bool>
 </resources>

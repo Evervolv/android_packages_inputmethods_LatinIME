@@ -90,8 +90,6 @@ public class SettingsValues {
     public final boolean mIsSplitKeyboardEnabled;
     public final int mScreenMetrics;
 
-    public final boolean mGestureLibForceDisabled;
-
     // From the input box
     @Nonnull
     public final InputAttributes mInputAttributes;
@@ -157,7 +155,6 @@ public class SettingsValues {
                 ? res.getString(R.string.auto_correction_threshold_mode_index_modest)
                 : res.getString(R.string.auto_correction_threshold_mode_index_off);
         mBigramPredictionEnabled = readBigramPredictionEnabled(prefs, res);
-        mGestureLibForceDisabled = readGestureLibForceDisabled(res);
         mDoubleSpacePeriodTimeout = res.getInteger(R.integer.config_double_space_period_timeout);
         mHasHardwareKeyboard = Settings.readHasHardwareKeyboard(res.getConfiguration());
         mEnableMetricsLogging = prefs.getBoolean(Settings.PREF_ENABLE_METRICS_LOGGING, true);
@@ -302,14 +299,6 @@ public class SettingsValues {
         final AppWorkaroundsUtils appWorkaroundUtils
                 = mAppWorkarounds.get(null, TIMEOUT_TO_GET_TARGET_PACKAGE);
         return null == appWorkaroundUtils ? false : appWorkaroundUtils.isBrokenByRecorrection();
-    }
-
-    public boolean isGestureLibForceDisabled() {
-        return mGestureLibForceDisabled;
-    }
-
-    private static boolean readGestureLibForceDisabled(Resource res) {
-        return res.getBoolean(R.bool.config_default_next_word_prediction);
     }
 
     private static final String SUGGESTIONS_VISIBILITY_HIDE_VALUE_OBSOLETE = "2";

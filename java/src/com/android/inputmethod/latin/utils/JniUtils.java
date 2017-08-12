@@ -19,14 +19,12 @@ package com.android.inputmethod.latin.utils;
 import android.util.Log;
 
 import com.android.inputmethod.latin.define.JniLibName;
-import com.android.inputmethod.latin.settings.SettingsValues;
 
 public final class JniUtils {
     private static final String TAG = JniUtils.class.getSimpleName();
 
     public static boolean mHaveGestureLib = false;
     static {
-        if (SettingsValues.isGestureLibForceDisabled()) return;
         try {
             System.loadLibrary(JniLibName.JNI_LIB_NAME2);
             mHaveGestureLib = true;

@@ -11,7 +11,7 @@ buildscript {
 apply plugin: 'com.android.application'
 
 android {
-    compileSdk 34
+    compileSdk 35
 
     namespace 'com.android.inputmethod.latin'
 
